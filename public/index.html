@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 25 Telemetry</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .card {
+            background: #222;
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 12px;
+        }
+
+        .value {
+            font-size: 48px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>F1 25 Live Telemetry</h1>
+
+    <div class="card">
+        <h2>Speed</h2>
+        <div class="value" id="speed">0</div>
+        <div>KM/H</div>
+    </div>
+
+    <div class="card">
+        <h2>RPM</h2>
+        <div class="value" id="rpm">0</div>
+    </div>
+
+    <div class="card">
+        <h2>Gear</h2>
+        <div class="value" id="gear">N</div>
+    </div>
+
+    <div class="card">
+        <h2>Throttle</h2>
+        <div class="value" id="throttle">0%</div>
+    </div>
+
+    <div class="card">
+        <h2>Brake</h2>
+        <div class="value" id="brake">0%</div>
+    </div>
+
+    <script>
+
+        const socket = io();
+
+        socket.on("telemetry", (data) => {
+
+            document.getElementById("speed").innerText = data.speed;
+            document.getElementById("rpm").innerText = data.rpm;
+            document.getElementById("gear").innerText = data.gear;
+            document.getElementById("throttle").innerText = data.throttle + "%";
+            document.getElementById("brake").innerText = data.brake + "%";
+
+        });
+
+    </script>
+
+</body>
+</html>
